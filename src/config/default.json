@@ -1,0 +1,14 @@
+{
+    "app": {
+        "apiPrefix": "",
+        "port": 3000,
+        "mongodb": {
+            "uri": "mongodb://localhost:27017/todo",
+            "debug": true
+        },
+        "auth": {
+            "secretKey": "",
+            "expiration": 3600
+        }
+    }
+}

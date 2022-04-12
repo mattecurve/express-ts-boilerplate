@@ -1,0 +1,13 @@
+{
+    "app": {
+        "apiPrefix": "API_PREFIX",
+        "port": "PORT",
+        "mongodb": {
+            "uri": "MONGODB_URI",
+            "debug": "MONGODB_DEBUG"
+        },
+        "auth": {
+            "secretKey": "AUTH_SECRET_KEY"
+        }
+    }
+}
