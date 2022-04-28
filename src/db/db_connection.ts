@@ -1,4 +1,4 @@
-import { connect, ConnectOptions, Model, Mongoose } from 'mongoose';
+import { connect, ConnectOptions, Model, mongo, Mongoose } from 'mongoose';
 import { Todo } from './models';
 
 interface DBConnectionParams {
@@ -10,6 +10,7 @@ export class DBConnection {
     mongoose: Mongoose;
     params: DBConnectionParams;
     repository: { [key: string]: Model<any, {}> } = {};
+    gfs: any;
 
     constructor(params: DBConnectionParams) {
         this.params = params;
@@ -25,5 +26,9 @@ export class DBConnection {
 
     async registerCollections() {
         this.repository.todo = Todo;
+        this.gfs = new mongo.GridFSBucket(this.mongoose.connection.db, {
+            chunkSizeBytes: 1024,
+            bucketName: 'images',
+        });
     }
 }

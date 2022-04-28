@@ -1,9 +1,9 @@
 import config from 'config';
-import { IAuthTokenService, ITodoService } from '../services/service.interface';
+import { IAuthTokenService, IFileService, ITodoService } from '../services/service.interface';
 import { IAuthController, ITodoController } from '../controllers/controller.interface';
 import { TodoController } from '../controllers/todo.controller';
 import { DBConnection } from '../db';
-import { AuthTokenService, TodoService } from '../services';
+import { AuthTokenService, FileService, TodoService } from '../services';
 import { AuthController } from '../controllers';
 
 export enum ServiceTypes {}
@@ -12,6 +12,7 @@ export class Context {
     services: {
         todoService?: ITodoService;
         authTokenService?: IAuthTokenService;
+        fileService?: IFileService;
     } = {};
 
     controllers: {
@@ -49,6 +50,9 @@ export async function initContext() {
     ctx.services.authTokenService = new AuthTokenService({
         secretKey: config.get('app.auth.secretKey'),
         expiration: config.get('app.auth.expiration'),
+    });
+    ctx.services.fileService = new FileService({
+        gfs: ctx.db.gfs,
     });
 
     // controllers

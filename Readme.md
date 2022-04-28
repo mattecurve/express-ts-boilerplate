@@ -57,6 +57,7 @@ Run `yarn build` or `npm run build` every time you change the config.
 - shx (dev)
 - ts-node (dev)
 - typescript (dev)
+- mime-types
 
 Run `npm install` at the root of the project to install all the packages.
 
