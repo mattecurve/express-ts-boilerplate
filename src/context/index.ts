@@ -1,12 +1,12 @@
-import config from 'config';
+import config, { IConfig } from 'config';
+import winston from 'winston';
 import { IAuthTokenService, IFileService, ITodoService } from '../services/service.interface';
 import { IAuthController, ITodoController } from '../controllers/controller.interface';
 import { TodoController } from '../controllers/todo.controller';
 import { DBConnection } from '../db';
 import { AuthTokenService, FileService, TodoService } from '../services';
 import { AuthController } from '../controllers';
-
-export enum ServiceTypes {}
+import { ILogger } from '../interfaces';
 
 export class Context {
     services: {
@@ -22,6 +22,10 @@ export class Context {
 
     db: DBConnection;
 
+    config: IConfig;
+
+    logger: ILogger;
+
     getConfig(key: string) {
         return config.get(key);
     }
@@ -34,12 +38,32 @@ export class Context {
 const ctx = new Context();
 
 export async function initContext() {
+    // step - load config
+    ctx.config = config;
+
+    // step - load logger
+    ctx.logger = ctx.isProduction()
+        ? winston.createLogger({
+              level: 'error',
+              format: winston.format.json(),
+              transports: [
+                  new winston.transports.File({ dirname: logsDir, filename: 'error.log', level: 'error' }),
+                  new winston.transports.File({ dirname: logsDir, filename: 'combined.log' }),
+              ],
+          })
+        : winston.createLogger({
+              level: 'info',
+              format: winston.format.json(),
+              transports: [new winston.transports.File({ dirname: logsDir, filename: 'combined.log' }), new winston.transports.Console()],
+          });
+
     // step - init db connection
     ctx.db = new DBConnection({
         uri: config.get('app.mongodb.uri'),
         options: {
             autoIndex: true,
             autoCreate: true,
+            dbName: config.get('app.mongodb.db'),
         },
     });
     await ctx.db.connect(config.get('app.mongodb.debug'));

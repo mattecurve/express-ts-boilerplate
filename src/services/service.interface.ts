@@ -19,3 +19,8 @@ export interface IFileService extends IService {
     loadFile(id: string, res: Response): Promise<boolean>;
     removeFile(id: string): Promise<undefined>;
 }
+
+export interface IOtpService extends IService {
+    sendOtp(mobileNumber: number, countryCode: number): Promise<{ requestId: string; expiration: Date }>;
+    verifyOtp(requestId: string, otp: number): Promise<{ success: true }>;
+}

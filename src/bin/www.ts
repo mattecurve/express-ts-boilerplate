@@ -15,6 +15,7 @@ declare global {
         interface Request {
             user: {
                 id: string;
+                role: string;
             } | null;
         }
     }
@@ -43,21 +44,22 @@ export class ApiApp implements IApp {
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(cors());
         this.app.use(compression());
-        this.app.use(
-            expressWinston.logger({
-                transports: [new winston.transports.Console()],
-                format: winston.format.combine(winston.format.colorize(), winston.format.json()),
-                meta: true,
-                expressFormat: true,
-                colorize: true,
-            }),
-        );
+        // @todo - enable this for production only when you can hide secure fields from request
+        if (!ctx.isProduction()) {
+            this.app.use(
+                expressWinston.logger({
+                    transports: [new winston.transports.Console()],
+                    format: winston.format.combine(winston.format.json(), winston.format.prettyPrint()),
+                    meta: true,
+                }),
+            );
+        }
         this.app.use(config.get('app.apiPrefix') ? `/${config.get('app.apiPrefix')}/` : '/', loadRouter(ctx));
         // log errors
         this.app.use(
             expressWinston.errorLogger({
                 transports: [new winston.transports.Console()],
-                format: winston.format.combine(winston.format.colorize(), winston.format.json()),
+                format: winston.format.combine(winston.format.colorize(), winston.format.json(), winston.format.prettyPrint()),
             }),
         );
         this.app.use(errorHandler);

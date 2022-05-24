@@ -6,6 +6,7 @@ const todoSchema = new Schema<ITodo>(
         name: { type: String, required: true },
     },
     {
+        timestamps: true,
         collection: 'todo',
     },
 );

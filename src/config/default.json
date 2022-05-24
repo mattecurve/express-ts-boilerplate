@@ -2,13 +2,30 @@
     "app": {
         "apiPrefix": "",
         "port": 3000,
+        "basicAuth": "",
         "mongodb": {
-            "uri": "mongodb://localhost:27017/todo",
+            "uri": "mongodb://localhost:27017",
+            "db": "todo",
             "debug": true
         },
         "auth": {
             "secretKey": "",
             "expiration": 3600
+        },
+        "razorpay": {
+            "apiKey": "",
+            "apiSecret": "",
+            "webhookSecret": ""
+        },
+        "otp": {
+            "expirationInSeconds": 30,
+            "userFakeOtp": true
+        },
+        "sms": {
+            "textLocal": {
+                "apiKey": "",
+                "senderName": ""
+            }
         }
     }
 }

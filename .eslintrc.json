@@ -31,7 +31,8 @@
                 "singleQuote": true,
                 "tabWidth": 4,
                 "trailingComma": "all",
-                "arrowParens": "always"
+                "arrowParens": "always",
+                "endOfLine": "auto"
             }
         ],
         "import/extensions": [
@@ -59,6 +60,7 @@
         "@typescript-eslint/no-shadow": ["error"],
         "@typescript-eslint/no-unused-vars": ["error"],
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
+        "no-underscore-dangle": "off"
     }
 }

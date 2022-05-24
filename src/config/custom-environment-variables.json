@@ -2,12 +2,29 @@
     "app": {
         "apiPrefix": "API_PREFIX",
         "port": "PORT",
+        "basicAuth": "BASIC_AUTH",
         "mongodb": {
             "uri": "MONGODB_URI",
+            "db": "MONGODB_DATABASE_NAME",
             "debug": "MONGODB_DEBUG"
         },
         "auth": {
             "secretKey": "AUTH_SECRET_KEY"
+        },
+        "razorpay": {
+            "apiKey": "RAZORPAY_API_KEY",
+            "apiSecret": "RAZORPAY_API_SECRET",
+            "webhookSecret": "RAZORPAY_WEBHOOK_SECRET"
+        },
+        "otp": {
+            "expirationInSeconds": "OTP_EXPIRATION_IN_SECONDS",
+            "userFakeOtp": "OTP_USE_FAKE_OTP"
+        },
+        "sms": {
+            "textLocal": {
+                "apiKey": "TEXT_LOCAL_API_KEY",
+                "senderName": "TEXT_LOCAL_SENDER_NAME"
+            }
         }
     }
 }
