@@ -4,17 +4,20 @@ module.exports = {
     async up(db) {
         const salt = await bcrypt.genSalt(10);
         const password = await bcrypt.hash('test', salt);
-        await db.collection('users').insertOne({
+        const adminRole = await db.collection('role').findOne({
+            isAdmin: true,
+        });
+        await db.collection('user').insertOne({
             username: 'admin',
             password,
-            role: 'admin',
+            role: adminRole._id,
             createdAt: new Date(),
             updatedAt: new Date(),
         });
     },
 
     async down(db) {
-        await db.collection('users').deleteOne({
+        await db.collection('user').deleteOne({
             username: 'admin',
         });
     },

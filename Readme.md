@@ -67,6 +67,6 @@ Run `npm install` at the root of the project to install all the packages.
 3. Go the root directory of the project.
 4. Run `npm install`.
 5. Make config changes.
-6. Run `npm run build` or `yarn build`.
+6. Run `npm run build` or `yarn build`. Run #6 every time you change config.
 7. Run `npm run dev` or `yarn dev`.
 8. Enjoy!

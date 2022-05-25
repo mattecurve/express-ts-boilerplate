@@ -1,11 +1,12 @@
+import path from 'path';
 import config, { IConfig } from 'config';
 import winston from 'winston';
 import { IAuthTokenService, IFileService, ITodoService } from '../services/service.interface';
-import { IAuthController, ITodoController } from '../controllers/controller.interface';
+import { IAdminLoginController, IAuthController, ITodoController } from '../controllers/controller.interface';
 import { TodoController } from '../controllers/todo.controller';
 import { DBConnection } from '../db';
 import { AuthTokenService, FileService, TodoService } from '../services';
-import { AuthController } from '../controllers';
+import { AdminLoginController, AuthController } from '../controllers';
 import { ILogger } from '../interfaces';
 
 export class Context {
@@ -18,6 +19,7 @@ export class Context {
     controllers: {
         todoController?: ITodoController;
         authController?: IAuthController;
+        adminLoginController?: IAdminLoginController;
     } = {};
 
     db: DBConnection;
@@ -40,6 +42,10 @@ const ctx = new Context();
 export async function initContext() {
     // step - load config
     ctx.config = config;
+
+    // step - load uploadDir
+    const basePath = path.join(__dirname, '../../');
+    const logsDir = path.join(basePath, 'logs');
 
     // step - load logger
     ctx.logger = ctx.isProduction()
@@ -85,6 +91,11 @@ export async function initContext() {
         todoService: ctx.services.todoService,
     }) as ITodoController;
     ctx.controllers.authController = new AuthController(ctx.services.authTokenService);
+    ctx.controllers.adminLoginController = new AdminLoginController({
+        userRepository: ctx.db.repository.user,
+        authTokenService: ctx.services.authTokenService,
+        logger: ctx.logger,
+    });
 }
 
 export function loadContext() {

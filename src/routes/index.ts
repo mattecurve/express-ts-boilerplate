@@ -3,6 +3,7 @@ import { asyncHandler, validateRequestBody, validateUserAuthentication } from '.
 import { Context } from '../context';
 import { createTodoSchema } from '../controllers';
 import { IAuthTokenService } from '../services/service.interface';
+import loadAdminUserRouter from './adminUser';
 
 function loadRouter(ctx: Context) {
     const router = Router();
@@ -39,6 +40,9 @@ function loadRouter(ctx: Context) {
         '/todo/error',
         asyncHandler((req: Request, res: Response) => ctx.controllers.todoController?.internalServerError(req, res)),
     );
+
+    router.use('/admin', loadAdminUserRouter(ctx));
+
     return router;
 }
 

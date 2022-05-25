@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import { BatchResponse, Message } from 'firebase-admin/messaging';
 
 export interface MessageParams {

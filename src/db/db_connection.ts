@@ -1,5 +1,5 @@
 import { connect, ConnectOptions, Model, mongo, Mongoose } from 'mongoose';
-import { MobileVerification, Todo } from './models';
+import { MobileVerification, Permission, Role, Todo, User } from './models';
 
 interface DBConnectionParams {
     uri: string;
@@ -27,6 +27,10 @@ export class DBConnection {
     async registerCollections() {
         this.repository.todo = Todo;
         this.repository.mobileVerification = MobileVerification;
+        this.repository.role = Role;
+        this.repository.permission = Permission;
+        this.repository.user = User;
+
         this.gfs = new mongo.GridFSBucket(this.mongoose.connection.db, {
             chunkSizeBytes: 1024,
             bucketName: 'images',
