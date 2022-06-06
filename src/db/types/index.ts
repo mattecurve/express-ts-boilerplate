@@ -21,3 +21,7 @@ export interface IAmount {
     type: AmountType;
     currency?: string;
 }
+
+export enum PermissionType {
+    DeleteUser = 'deleteUser',
+}

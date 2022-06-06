@@ -1,11 +1,11 @@
 export interface ITextLocalSendMessageParams {
-    sender: string;
+    sender?: string;
     message: string;
     numbers: number[];
 }
 
 export interface ITextLocalSendBulkMessagesParams {
-    sender: string;
+    sender?: string;
     messages: {
         number: number;
         text: string;

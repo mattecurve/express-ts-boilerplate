@@ -6,6 +6,8 @@ const permissionSchema = new Schema<IPermission>(
         name: { type: String, required: true, unique: true },
         code: { type: String, required: true, unique: true },
         description: { type: String },
+        groupCode: { type: String },
+        parentId: { type: Schema.Types.ObjectId, default: null },
     },
     {
         collection: 'permission',

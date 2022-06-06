@@ -19,16 +19,18 @@ export class TextLocalService {
     apiTemplateUrl: string = 'https://api.textlocal.in/get_templates/';
     apiSenderNamesUrl: string = 'https://api.textlocal.in/get_sender_names/';
     apiKey: string;
+    senderId: string;
 
-    constructor(apiKey: string) {
-        this.apiKey = apiKey;
+    constructor(params: { apiKey: string; senderId: string }) {
+        this.apiKey = params.apiKey;
+        this.senderId = params.senderId;
     }
 
     async sendMessage(params: ITextLocalSendMessageParams): Promise<ITextLocalMessageResponse> {
         const data = {
             apikey: encodeURIComponent(this.apiKey),
             numbers: params.numbers.join(','),
-            sender: encodeURIComponent(params.sender),
+            sender: encodeURIComponent(this.senderId),
             message: encodeURIComponent(params.message),
         };
         const urlParams = new URLSearchParams();
@@ -44,7 +46,7 @@ export class TextLocalService {
         const data = {
             apikey: encodeURIComponent(this.apiKey),
             data: JSON.stringify({
-                sender: encodeURIComponent(params.sender),
+                sender: encodeURIComponent(this.senderId),
                 messages: params.messages.map((v) => {
                     // eslint-disable-next-line no-param-reassign
                     v.text = encodeURIComponent(v.text);

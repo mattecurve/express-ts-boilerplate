@@ -14,6 +14,7 @@
     "lint": "eslint . --ext .ts",
     "start": "cd dist && node index.js",
     "dev": "tsc --project './tsconfig.json' --watch & NODE_ENV=development cd dist && nodemon",
+    "command": "tsc --project './tsconfig.json' & NODE_ENV=development cd dist && node crons/index.js",
     "dev:cluster": "",
     "migration": "migrate-mongo",
     "migration:help": "migrate-mongo"
@@ -23,6 +24,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.95.0",
     "axios": "^0.27.2",
+    "basic-ftp": "^4.6.6",
     "bcrypt": "^5.0.1",
     "bluebird": "^3.7.2",
     "body-parser": "^1.20.0",
@@ -33,7 +35,7 @@
     "express": "^4.17.3",
     "express-jwt": "^6.1.1",
     "express-winston": "^4.2.0",
-    "firebase-admin": "^10.2.0",
+    "firebase-admin": "^7.0.0",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",

@@ -24,6 +24,12 @@
             "textLocal": {
                 "apiKey": "TEXT_LOCAL_API_KEY",
                 "senderName": "TEXT_LOCAL_SENDER_NAME"
+            },
+            "trustSignal": {
+                "apiUrl": "TRUST_SIGNAL_API_URL",
+                "apiKey": "TRUST_SIGNAL_API_KEY",
+                "senderName": "TRUST_SIGNAL_SENDER_NAME",
+                "otpTemplateId": "TRUST_SIGNAL_OTP_TEMPLATE_ID"
             }
         }
     }

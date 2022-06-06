@@ -8,6 +8,24 @@ const roleSchema = new Schema<IRole>(
             required: true,
             unique: true,
         },
+        code: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        isAdmin: {
+            type: Boolean,
+            default: false,
+        },
+        isSystemGenerated: {
+            type: Boolean,
+            default: false,
+        },
+        permissions: {
+            _id: false,
+            type: [Schema.Types.ObjectId],
+            default: [],
+        },
         createdBy: {
             type: Schema.Types.ObjectId,
         },
