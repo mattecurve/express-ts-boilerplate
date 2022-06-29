@@ -68,7 +68,7 @@ export class Context implements IContext {
 
 const ctx = new Context();
 
-export async function initContext(initRpcServer: boolean = true) {
+export async function initContext(params: { initRpcClient: boolean; initRpcServer: boolean }) {
     const isDebugMode = !ctx.isProduction();
 
     // step - load config
@@ -106,7 +106,11 @@ export async function initContext(initRpcServer: boolean = true) {
     await ctx.db.connect(config.get('app.mongodb.debug'));
     await ctx.db.registerCollections();
 
-    if (initRpcServer) {
+    // @todo - Need to support multiple exchanges on same route(queue)
+    // @see https://amqp-node.github.io/amqplib/channel_api.html#channel_assertExchange
+    // this would allow synchronous operations through multiple consumer.
+    // we should be able send specific category messages to specific consumer.
+    if (params.initRpcServer) {
         const rpcServerDefinitions = [
             {
                 queue: 'sync_rpc_queue',
@@ -147,13 +151,15 @@ export async function initContext(initRpcServer: boolean = true) {
         );
     }
 
-    ctx.syncRpcClient = new RPCClient(amqp, config.get('app.rpc.client'), 'sync_rpc_queue');
-    ctx.syncRpcClient.setDebug(isDebugMode);
-    await ctx.syncRpcClient.start();
+    if (params.initRpcClient) {
+        ctx.syncRpcClient = new RPCClient(amqp, config.get('app.rpc.client'), 'sync_rpc_queue', 'sync_rpc_queue_response');
+        ctx.syncRpcClient.setDebug(isDebugMode);
+        await ctx.syncRpcClient.start();
 
-    ctx.asyncRpcClient = new RPCClient(amqp, config.get('app.rpc.client'), 'async_rpc_queue');
-    ctx.asyncRpcClient.setDebug(isDebugMode);
-    await ctx.asyncRpcClient.start();
+        ctx.asyncRpcClient = new RPCClient(amqp, config.get('app.rpc.client'), 'async_rpc_queue', 'async_rpc_queue_response');
+        ctx.asyncRpcClient.setDebug(isDebugMode);
+        await ctx.asyncRpcClient.start();
+    }
 
     // services
     ctx.services.todoService = new TodoService() as ITodoService;

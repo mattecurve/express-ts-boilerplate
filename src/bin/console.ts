@@ -3,7 +3,7 @@ import { IApp } from './types';
 
 export class ConsoleApp implements IApp {
     async bootstrap(): Promise<void> {
-        await initContext();
+        await initContext({ initRpcClient: false, initRpcServer: false });
     }
 
     async serve(): Promise<void> {

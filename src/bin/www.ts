@@ -6,6 +6,7 @@ import compression from 'compression';
 import config from 'config';
 import winston from 'winston';
 import expressWinston from 'express-winston';
+import _ from 'lodash';
 
 import loadRouter from '../routes';
 import { initContext, loadContext } from '../context';
@@ -28,16 +29,21 @@ export class ApiApp implements IApp {
     port: number;
     protected isRpcApp: boolean = false;
     protected initRpcServer: boolean = true;
+    protected initRpcClient: boolean = true;
 
-    constructor(initRpcServer: boolean = true) {
+    constructor(params: { initRpcServer: boolean; initRpcClient: boolean }) {
         this.app = express();
-        this.initRpcServer = initRpcServer;
+        this.initRpcServer = params.initRpcServer;
+        this.initRpcClient = params.initRpcClient;
     }
 
     async bootstrap(): Promise<void> {
-        await initContext(this.initRpcServer);
+        await initContext({
+            initRpcClient: this.initRpcClient,
+            initRpcServer: this.initRpcServer,
+        });
         const ctx = loadContext();
-        this.port = this.isRpcApp ? config.get('app.rpcPort') : config.get('app.port');
+        this.port = this.isRpcApp ? Number(`300${_.random(1, 9)}`) : config.get('app.port');
         this.app.disable('x-powered-by');
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
@@ -89,7 +95,10 @@ export class ApiApp implements IApp {
 
 export class RpcApp extends ApiApp {
     constructor() {
-        super(true);
+        super({
+            initRpcClient: false,
+            initRpcServer: true,
+        });
         this.isRpcApp = true;
     }
 }

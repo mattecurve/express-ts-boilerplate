@@ -17,6 +17,7 @@ export class RpcController implements IRpcController {
 
     async asyncTest(req: Request, res: Response): Promise<Response> {
         const response = await this._.asyncRpcClient.call(RpcFunctionNames.Test, {
+            d: new Date().getTime(),
             id: req.query.id,
         });
         return res.json(response);

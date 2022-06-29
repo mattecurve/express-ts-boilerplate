@@ -36,12 +36,14 @@
         },
         "rpc": {
             "client": {
+                "protocol": "amqp",
                 "hostname": "127.0.0.1",
                 "port": 5672,
                 "username": "guest",
                 "password": "guest"
             },
             "server": {
+                "protocol": "amqp",
                 "hostname": "127.0.0.1",
                 "port": 5672,
                 "username": "guest",

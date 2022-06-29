@@ -6,7 +6,7 @@ export function testServiceFunction(ctx: IContext) {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(data);
-            }, 10000);
+            }, 2000);
         });
     };
 }
