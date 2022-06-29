@@ -20,6 +20,7 @@
         "noImplicitThis": true,
         "skipLibCheck": true,
         "strict": true,
+        "incremental": true,
         "outDir": "dist",
         "baseUrl": ".",
         "paths": {

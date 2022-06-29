@@ -18,3 +18,8 @@ export interface IAuthController extends IController {
 export interface IAdminLoginController extends IController {
     login(req: Request, res: Response): Promise<Response>;
 }
+
+export interface IRpcController extends IController {
+    asyncTest(req: Request, res: Response): Promise<Response>;
+    syncTest(req: Request, res: Response): Promise<Response>;
+}

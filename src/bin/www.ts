@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import express, { Express } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -9,6 +10,7 @@ import expressWinston from 'express-winston';
 import loadRouter from '../routes';
 import { initContext, loadContext } from '../context';
 import { errorHandler } from '../middlewares';
+import { IApp } from './types';
 
 declare global {
     namespace Express {
@@ -21,24 +23,21 @@ declare global {
     }
 }
 
-interface IApp {
-    bootstrap(): Promise<void>;
-
-    serve(): Promise<void>;
-}
-
 export class ApiApp implements IApp {
     app: Express;
     port: number;
+    protected isRpcApp: boolean = false;
+    protected initRpcServer: boolean = true;
 
-    constructor() {
+    constructor(initRpcServer: boolean = true) {
         this.app = express();
+        this.initRpcServer = initRpcServer;
     }
 
     async bootstrap(): Promise<void> {
-        await initContext();
+        await initContext(this.initRpcServer);
         const ctx = loadContext();
-        this.port = config.get('app.port');
+        this.port = this.isRpcApp ? config.get('app.rpcPort') : config.get('app.port');
         this.app.disable('x-powered-by');
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
@@ -54,7 +53,9 @@ export class ApiApp implements IApp {
                 }),
             );
         }
-        this.app.use(config.get('app.apiPrefix') ? `/${config.get('app.apiPrefix')}/` : '/', loadRouter(ctx));
+
+        this.app.use(config.get('app.apiPrefix') ? `/${config.get('app.apiPrefix')}/` : '/', loadRouter(ctx, this.isRpcApp));
+
         // log errors
         this.app.use(
             expressWinston.errorLogger({
@@ -66,9 +67,29 @@ export class ApiApp implements IApp {
     }
 
     async serve(): Promise<void> {
-        this.app.listen(this.port, () => {
+        const server = this.app.listen(this.port, () => {
             // eslint-disable-next-line no-console
             console.log(`⚡️[server]: Server is running at http://localhost:${this.port}`);
         });
+
+        // Handle SIGINT event
+        process.on('SIGINT', async () => {
+            // eslint-disable-next-line no-console
+            console.log('graceful shutdown the server');
+            server.close();
+            await this.down();
+            process.exit(0);
+        });
+    }
+
+    async down(): Promise<void> {
+        return loadContext().down();
+    }
+}
+
+export class RpcApp extends ApiApp {
+    constructor() {
+        super(true);
+        this.isRpcApp = true;
     }
 }

@@ -5,11 +5,15 @@ import { createTodoSchema } from '../controllers';
 import { IAuthTokenService } from '../services/service.interface';
 import loadAdminUserRouter from './adminUser';
 
-function loadRouter(ctx: Context) {
+function loadRouter(ctx: Context, isRpcApp: boolean = false) {
     const router = Router();
     router.get('/', (req: Request, res: Response) => {
         res.send('Hello Boilerplate');
     });
+    if (isRpcApp) {
+        return router;
+    }
+
     router.post(
         '/create-auth-token',
         asyncHandler((req: Request, res: Response) => ctx.controllers.authController?.createToken(req, res)),
@@ -39,6 +43,15 @@ function loadRouter(ctx: Context) {
     router.get(
         '/todo/error',
         asyncHandler((req: Request, res: Response) => ctx.controllers.todoController?.internalServerError(req, res)),
+    );
+
+    router.get(
+        '/rpc/async-test',
+        asyncHandler((req: Request, res: Response) => ctx.controllers.rpcController?.asyncTest(req, res)),
+    );
+    router.get(
+        '/rpc/sync-test',
+        asyncHandler((req: Request, res: Response) => ctx.controllers.rpcController?.syncTest(req, res)),
     );
 
     router.use('/admin', loadAdminUserRouter(ctx));

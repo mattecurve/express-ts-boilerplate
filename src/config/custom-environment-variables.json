@@ -2,6 +2,7 @@
     "app": {
         "apiPrefix": "API_PREFIX",
         "port": "PORT",
+        "rpcPort": "RPC_PORT",
         "basicAuth": "BASIC_AUTH",
         "mongodb": {
             "uri": "MONGODB_URI",

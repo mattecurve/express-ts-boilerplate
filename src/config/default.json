@@ -2,6 +2,7 @@
     "app": {
         "apiPrefix": "",
         "port": 3000,
+        "rpcPort": 3001,
         "basicAuth": "",
         "mongodb": {
             "uri": "mongodb://localhost:27017",
@@ -31,6 +32,20 @@
                 "apiKey": "",
                 "senderName": "",
                 "otpTemplateId": ""
+            }
+        },
+        "rpc": {
+            "client": {
+                "hostname": "127.0.0.1",
+                "port": 5672,
+                "username": "guest",
+                "password": "guest"
+            },
+            "server": {
+                "hostname": "127.0.0.1",
+                "port": 5672,
+                "username": "guest",
+                "password": "guest"
             }
         }
     }
