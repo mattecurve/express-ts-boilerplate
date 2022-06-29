@@ -32,6 +32,22 @@
                 "senderName": "TRUST_SIGNAL_SENDER_NAME",
                 "otpTemplateId": "TRUST_SIGNAL_OTP_TEMPLATE_ID"
             }
+        },
+        "rpc": {
+            "client": {
+                "protocol": "amqp",
+                "hostname": "RPC_CLIENT_HOSTNAME",
+                "port": "RPC_CLIENT_PORT",
+                "username": "RPC_CLIENT_USERNAME",
+                "password": "RPC_CLIENT_PASSWORD"
+            },
+            "server": {
+                "protocol": "amqp",
+                "hostname": "RPC_SERVER_HOSTNAME",
+                "port": "RPC_SERVER_PORT",
+                "username": "RPC_SERVER_USERNAME",
+                "password": "RPC_SERVER_PASSWORD"
+            }
         }
     }
 }

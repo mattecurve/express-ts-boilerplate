@@ -53,9 +53,17 @@ export class Context implements IContext {
         // stop all rpc connections
         await Promise.all(
             _.map(this.rpcServers, (rpcServer) => {
-                return rpcServer.stop();
+                return rpcServer.stop().catch(this.logger.error);
             }),
         );
+
+        if (this.asyncRpcClient) {
+            await this.asyncRpcClient.stop().catch(this.logger.error);
+        }
+
+        if (this.syncRpcClient) {
+            await this.syncRpcClient.stop().catch(this.logger.error);
+        }
 
         try {
             await this.db.disconnect();
