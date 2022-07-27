@@ -1,5 +1,6 @@
 {
     "app": {
+        "name": "APP_NAME",
         "apiPrefix": "API_PREFIX",
         "port": "PORT",
         "rpcPort": "RPC_PORT",

@@ -62,7 +62,11 @@ Run `yarn build` or `npm run build` every time you change the config.
 Run `npm install` at the root of the project to install all the packages.
 
 # Run the rabbitmq before running application
-- `docker run --name rpc -p 5672:5672 rabbitmq:3`
+- `docker run --name rpc --rm -p 5677:5672 rabbitmq:3`
+
+# RPC Server Integration Issues
+- Multiple instances of same API server won't consume messages correctly.
+- Multiple instances of Rpc Server should be working fine.
 
 # Steps to setup development environment
 1. Make sure you have installed `npm` and `nodejs`.
@@ -176,3 +180,21 @@ rs.conf()
 rs.status()
 ```
 12. If step 1...11 ran correctly then mongo replica should be configured correctly.
+
+# PM2
+- @see https://pm2.keymetrics.io/docs/usage/application-declaration/
+1. `pm2 start ecosystem.config.js`
+2. `pm2 restart ecosystem.config.js`
+3. `pm2 delete ecosystem.config.js` - Use this when you have modified ecosystem.config.js
+4. `pm2 --help` - Check for more commands
+5. `--env production` - Append this to run specific environment (production | staging | development)
+6. `--only "AppOne,AppTwo"` - Append this to run specific apps
+
+# Screen Command
+1. `screen`
+2. `Enter command to run`
+3. `ctrl + a + d`
+4. List screens `screen -ls`
+5. Close screen
+   1. `screen -r <id>`
+   2. exit

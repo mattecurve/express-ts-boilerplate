@@ -160,12 +160,20 @@ export async function initContext(params: { initRpcClient: boolean; initRpcServe
     }
 
     if (params.initRpcClient) {
-        ctx.syncRpcClient = new RPCClient(amqp, config.get('app.rpc.client'), 'sync_rpc_queue', 'sync_rpc_queue_response');
+        const queuePrefix = process.env.pm_id ? `${config.get('app.name')}_${process.env.pm_id}` : `${config.get('app.name')}`;
+        ctx.syncRpcClient = new RPCClient(amqp, config.get('app.rpc.client'), 'sync_rpc_queue', `${queuePrefix}_sync_rpc_queue_response`);
         ctx.syncRpcClient.setDebug(isDebugMode);
+        ctx.syncRpcClient.setConsumerTag(`${new Date().getTime()}`);
         await ctx.syncRpcClient.start();
 
-        ctx.asyncRpcClient = new RPCClient(amqp, config.get('app.rpc.client'), 'async_rpc_queue', 'async_rpc_queue_response');
+        ctx.asyncRpcClient = new RPCClient(
+            amqp,
+            config.get('app.rpc.client'),
+            'async_rpc_queue',
+            `${queuePrefix}_async_rpc_queue_response`,
+        );
         ctx.asyncRpcClient.setDebug(isDebugMode);
+        ctx.syncRpcClient.setConsumerTag(`${new Date().getTime()}`);
         await ctx.asyncRpcClient.start();
     }
 

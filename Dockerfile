@@ -13,11 +13,13 @@ COPY ["./package.json", "./package-lock.json", "/home/app/"]
 # Here we go
 WORKDIR /home/app
 
-# Install Node Dependencies
-RUN npm install
-
 # Copy over application
 COPY ./dist /home/app
 
+# Install Node Dependencies
+RUN npm install --only=production
+
+RUN npm install pm2 -g
+
 # Lift off!
-CMD ["node", "index.js"]
+CMD ["pm2-runtime", "index.js"]

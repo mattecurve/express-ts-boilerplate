@@ -38,7 +38,7 @@
         "pm2": "^5.2.0",
         "randomatic": "^3.1.1",
         "reflect-metadata": "^0.1.13",
-        "remote-procedure-call-rabbitmq": "^1.0.11",
+        "remote-procedure-call-rabbitmq": "^1.0.12",
         "uuid": "^8.3.2",
         "winston": "^3.7.2",
         "yargs": "^17.5.1"
@@ -9558,9 +9558,9 @@
       }
     },
     "node_modules/remote-procedure-call-rabbitmq": {
-      "version": "1.0.11",
-      "resolved": "https://registry.npmjs.org/remote-procedure-call-rabbitmq/-/remote-procedure-call-rabbitmq-1.0.11.tgz",
-      "integrity": "sha512-pXxkfVMc9Cq6lwAoiXdlSflAZ+cl95Lyysf5gkBmn31kOosL3uvJcwObqAAIjLkm4X1ShfFEP2eNVYPi/4FKTg==",
+      "version": "1.0.12",
+      "resolved": "https://registry.npmjs.org/remote-procedure-call-rabbitmq/-/remote-procedure-call-rabbitmq-1.0.12.tgz",
+      "integrity": "sha512-o1EN+3FVZyknePwmM8s+oSzXiUgKKn7nV8jCXg5FSDtrdGEqDuHJp6pBmN42U256wmfCyMvnMqjLbYde0X+frA==",
       "dependencies": {
         "@types/sinon": "^9.0.10",
         "amqplib": "^0.10.0",
@@ -19207,9 +19207,9 @@
       }
     },
     "remote-procedure-call-rabbitmq": {
-      "version": "1.0.11",
-      "resolved": "https://registry.npmjs.org/remote-procedure-call-rabbitmq/-/remote-procedure-call-rabbitmq-1.0.11.tgz",
-      "integrity": "sha512-pXxkfVMc9Cq6lwAoiXdlSflAZ+cl95Lyysf5gkBmn31kOosL3uvJcwObqAAIjLkm4X1ShfFEP2eNVYPi/4FKTg==",
+      "version": "1.0.12",
+      "resolved": "https://registry.npmjs.org/remote-procedure-call-rabbitmq/-/remote-procedure-call-rabbitmq-1.0.12.tgz",
+      "integrity": "sha512-o1EN+3FVZyknePwmM8s+oSzXiUgKKn7nV8jCXg5FSDtrdGEqDuHJp6pBmN42U256wmfCyMvnMqjLbYde0X+frA==",
       "requires": {
         "@types/sinon": "^9.0.10",
         "amqplib": "^0.10.0",
